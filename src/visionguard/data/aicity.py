@@ -44,10 +44,7 @@ class AICityScene:
         return target
 
 def object_type_id(name: str) -> int:
-    return {
-        "Person": 0, "Forklift": 1, "NovaCarter": 2,
-        "Transporter": 3, "FourierGR1T2": 4, "AgilityDigit": 5,
-    }.get(name, 99)
+    return {"Person": 0, "Forklift": 1, "NovaCarter": 2, "Transporter": 3, "FourierGR1T2": 4, "AgilityDigit": 5}.get(name, 99)
 
 def _camera_ids(payload: dict) -> set[str]:
     ids = set()
