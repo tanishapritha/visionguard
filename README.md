@@ -10,8 +10,6 @@ The system detects distributional change, measures whether that change correlate
 
 ## Research focus
 
-VisionGuard is built around four questions:
-
 1. Which drift signals best predict downstream model degradation?
 2. Can a video-language model characterize detected drift more usefully than statistical signals alone?
 3. Can claims about drift be grounded in temporally localized video evidence?
@@ -21,52 +19,24 @@ The project treats these as empirical questions. No component is assumed to impr
 
 ## Experimental loop
 
-```text
-reference video
-      |
-      v
-baseline CV model
-      |
-      +--------------------+
-      |                    |
-      v                    v
-feature/output logs   controlled drift
-      |                    |
-      +---------+----------+
-                v
-          drift detection
-                |
-                v
-       drift-to-performance
-            analysis
-                |
-                v
-          routing policy
-           /          \
-         CV       VLM investigation
-                     |
-                     v
-             temporal evidence
-                     |
-                     v
-             claim verification
-```
+reference video -> baseline CV model -> drift detection -> routing -> VLM investigation -> temporal evidence -> claim verification
 
-## Status
+## Current milestone
 
-Early research prototype. The first milestone is a reproducible benchmark connecting controlled visual drift to actual downstream model performance.
+The controlled drift benchmark is connected to a real-video ingestion boundary and a detector-agnostic baseline evaluation interface. The next step is to instantiate this contract against a specific public video dataset and run the first baseline.
 
 ## Repository structure
 
-- `src/visionguard/drift` — drift statistics and aggregation
-- `src/visionguard/routing` — adaptive inference decisions
-- `src/visionguard/evidence` — evidence and claim schemas
-- `src/visionguard/vlm` — model-provider interface
-- `benchmarks` — benchmark generation and evaluation
-- `configs` — experiment configuration
-- `tests` — unit and integration tests
-- `docs` — research notes and methodology
+- src/visionguard/data — video ingestion, sampling, and manifest contracts
+- src/visionguard/baseline — detector interface, evaluation, and optional YOLO adapter
+- src/visionguard/drift — drift statistics and aggregation
+- src/visionguard/routing — adaptive inference decisions
+- src/visionguard/evidence — evidence and claim schemas
+- src/visionguard/vlm — model-provider interface
+- configs — experiment configuration
+- tests — unit and integration tests
+- docs — research notes and methodology
 
-## License
+## Data policy
 
-MIT
+Raw video and generated benchmark media stay outside git. Dataset-specific manifests point to local or mounted data.
