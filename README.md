@@ -8,6 +8,12 @@ VisionGuard studies a practical reliability problem in deployed video systems:
 
 The system detects distributional change, measures whether that change correlates with task degradation, selectively invokes video-language reasoning for investigation, and attaches temporal evidence to the resulting claims.
 
+## Architecture
+
+<p align="center">
+  <img src="docs/architecture.svg" alt="VisionGuard architecture" width="100%">
+</p>
+
 ## Research focus
 
 1. Which drift signals best predict downstream model degradation?
