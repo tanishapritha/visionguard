@@ -1,24 +1,28 @@
 from __future__ import annotations
 
-import csv
-from dataclasses import asdict
+import json
 from pathlib import Path
-from typing import Iterable
-
-from .runner import ExperimentRecord
 
 
-def write_results(records: Iterable[ExperimentRecord], path: str | Path) -> Path:
-    rows = [asdict(record) for record in records]
-    if not rows:
-        raise ValueError("records must not be empty")
+def load_experiment(path: str | Path) -> dict:
+    """Load a VisionGuard experiment result artifact."""
+    source = Path(path)
+    if not source.exists():
+        raise FileNotFoundError(source)
+    payload = json.loads(source.read_text(encoding="utf-8"))
+    if "records" not in payload:
+        raise ValueError("experiment artifact must contain records")
+    return payload
 
-    destination = Path(path)
-    destination.parent.mkdir(parents=True, exist_ok=True)
 
-    with destination.open("w", newline="", encoding="utf-8") as handle:
-        writer = csv.DictWriter(handle, fieldnames=list(rows[0]))
-        writer.writeheader()
-        writer.writerows(rows)
-
-    return destination
+def summarize_experiment(payload: dict) -> dict:
+    records = payload.get("records", [])
+    if not records:
+        return {"records": 0}
+    return {
+        "records": len(records),
+        "baseline_f1": records[0]["baseline_f1"],
+        "largest_f1_drop": min(r["metric_delta"] for r in records),
+        "largest_drift_score": max(r["drift_score"] for r in records),
+        "severities": [r["severity"] for r in records],
+    }
