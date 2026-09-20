@@ -1,0 +1,10 @@
+root: data/raw
+videos:
+  - video_id: example
+    video_path: example.mp4
+    split: test
+    annotation_path: example.jsonl
+sampling:
+  target_fps: 2.0
+evaluation:
+  iou_threshold: 0.5
