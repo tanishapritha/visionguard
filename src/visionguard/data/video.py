@@ -2,7 +2,6 @@ from __future__ import annotations
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Iterator
-import cv2
 import numpy as np
 
 @dataclass(frozen=True)
@@ -17,6 +16,10 @@ def read_video(path: str | Path, video_id: str | None = None, stride: int = 1, m
         raise ValueError("stride must be >= 1")
     if max_frames is not None and max_frames < 1:
         raise ValueError("max_frames must be >= 1 when provided")
+    try:
+        import cv2
+    except ImportError as exc:
+        raise ImportError("OpenCV is required for video ingestion. Install visionguard[cv].") from exc
     path = Path(path)
     capture = cv2.VideoCapture(str(path))
     if not capture.isOpened():
