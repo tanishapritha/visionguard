@@ -1,0 +1,20 @@
+train:
+  - data/raw/MTMC_Tracking_2025/train/Warehouse_000
+  - data/raw/MTMC_Tracking_2025/train/Warehouse_002
+  - data/raw/MTMC_Tracking_2025/train/Warehouse_004
+
+val:
+  - data/raw/MTMC_Tracking_2025/train/Warehouse_001
+
+output: data/processed/aicity_yolo
+frame_stride: 30
+max_frames_per_camera: 300
+seed: 42
+
+classes:
+  - Person
+  - Forklift
+  - NovaCarter
+  - Transporter
+  - FourierGR1T2
+  - AgilityDigit

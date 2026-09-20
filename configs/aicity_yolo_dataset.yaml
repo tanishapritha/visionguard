@@ -1,0 +1,11 @@
+path: data/processed/aicity_yolo
+train: images/train
+val: images/val
+
+names:
+  0: Person
+  1: Forklift
+  2: NovaCarter
+  3: Transporter
+  4: FourierGR1T2
+  5: AgilityDigit
